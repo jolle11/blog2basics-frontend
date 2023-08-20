@@ -8,5 +8,4 @@ export default defineConfig({
 	plugins: [
 		react({ babel: { plugins: [jotaiDebugLabel, jotaiReactRefresh] } }),
 	],
-	// ... The rest of your configuration
 });
