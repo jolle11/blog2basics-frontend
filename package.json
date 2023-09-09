@@ -10,7 +10,6 @@
 		"preview": "vite preview"
 	},
 	"dependencies": {
-		"@ant-design/icons": "^5.2.5",
 		"@tanstack/query-core": "^4.33.0",
 		"@tanstack/react-query": "^4.33.0",
 		"antd": "^5.8.4",
@@ -20,6 +19,7 @@
 		"jotai-tanstack-query": "^0.7.1",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
+		"react-icons": "^4.11.0",
 		"react-router-dom": "^6.15.0",
 		"react-simplemde-editor": "^5.2.0"
 	},
