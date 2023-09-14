@@ -8,19 +8,15 @@ import axios from "axios";
 import { useAtom } from "jotai";
 import { PiLockBold, PiUserBold } from "react-icons/pi";
 import { Link } from "react-router-dom";
+import { authTokenAtom, isAuthenticatedAtom } from "../atoms/authAtoms";
 import { errorAtom, isLoadingAtom } from "../atoms/genericAtoms";
-import {
-    authTokenAtom,
-    isAuthenticatedAtom,
-    passwordAtom,
-    userEmailAtom,
-} from "../atoms/loginAtoms";
+import { userEmailAtom, userPasswordAtom } from "../atoms/userAtoms";
 import { useNotification } from "../services/notification";
 import Loader from "./Loader";
 
 const LoginForm = () => {
     const [userEmail, setUserEmail] = useAtom(userEmailAtom);
-    const [password, setPassword] = useAtom(passwordAtom);
+    const [password, setPassword] = useAtom(userPasswordAtom);
     const [isAuthenticated, setIsAuthenticated] = useAtom(isAuthenticatedAtom);
     const [authToken, setAuthToken] = useAtom(authTokenAtom);
 
@@ -63,6 +59,7 @@ const LoginForm = () => {
 
     return (
         <>
+            {contextHolder}
             <Form name="loginForm" onFinish={onFinish}>
                 <FormItem
                     name="email"
@@ -119,7 +116,6 @@ const LoginForm = () => {
                     </Paragraph>
                 </FormItem>
             </Form>
-            {contextHolder}
         </>
     );
 };
