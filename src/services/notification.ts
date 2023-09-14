@@ -14,7 +14,7 @@ export const useNotification = (
 			messageApi?.error(description);
 			break;
 		}
-		default: {
+		case 'info': {
 			messageApi?.info(description);
 			break;
 		}
