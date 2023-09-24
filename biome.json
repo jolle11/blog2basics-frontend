@@ -8,7 +8,10 @@
 	"linter": {
 		"enabled": true,
 		"rules": {
-			"all": true
+			"all": true,
+			"nursery": { "useExhaustiveDependencies": "off" },
+			"style": { "useNamingConvention": "off" },
+			"suspicious": { "noConsoleLog": "off" }
 		}
 	},
 	"organizeImports": {
