@@ -1,29 +1,38 @@
-import { message } from "antd";
+import { Space, message } from "antd";
 import Button from "antd/es/button/button";
 import Form from "antd/es/form/Form";
 import FormItem from "antd/es/form/FormItem";
 import Input from "antd/es/input/Input";
 import Paragraph from "antd/es/typography/Paragraph";
+import Title from "antd/es/typography/Title";
 import axios from "axios";
 import { useAtom } from "jotai";
-import { PiLockBold, PiUserBold } from "react-icons/pi";
-import { Link } from "react-router-dom";
+import { PiAtBold, PiLockBold } from "react-icons/pi";
+import { Link, useNavigate } from "react-router-dom";
 import { authTokenAtom, isAuthenticatedAtom } from "../atoms/authAtoms";
-import { errorAtom, isLoadingAtom } from "../atoms/genericAtoms";
-import { userEmailAtom, userPasswordAtom } from "../atoms/userAtoms";
-import { useNotification } from "../services/notification";
+import { userBlogAtom } from "../atoms/blogAtoms";
+import { isLoadingAtom } from "../atoms/genericAtoms";
+import {
+    userAliasAtom,
+    userEmailAtom,
+    userPasswordAtom,
+} from "../atoms/userAtoms";
 import Loader from "./Loader";
 
 const LoginForm = () => {
     const [userEmail, setUserEmail] = useAtom(userEmailAtom);
     const [password, setPassword] = useAtom(userPasswordAtom);
+    const [, setAlias] = useAtom(userAliasAtom);
+    const [, setBlog] = useAtom(userBlogAtom);
+
     const [isAuthenticated, setIsAuthenticated] = useAtom(isAuthenticatedAtom);
     const [authToken, setAuthToken] = useAtom(authTokenAtom);
 
     const [isLoading, setIsLoading] = useAtom(isLoadingAtom);
-    // const [error, setError] = useAtom(errorAtom);
 
     const [messageApi, contextHolder] = message.useMessage();
+
+    const navigate = useNavigate();
 
     const onFinish = () => {
         setIsLoading(true);
@@ -44,22 +53,23 @@ const LoginForm = () => {
             .then((response) => {
                 localStorage.setItem("authToken", response.data.token);
                 setAuthToken(response.data.token);
-                useNotification(
-                    messageApi,
-                    "success",
-                    "Successfully logged in!"
-                );
+                setIsAuthenticated(true);
+                setAlias(response.data.alias);
+                setBlog(response.data.blog);
                 setIsLoading(false);
+                messageApi.success("Successfully logged in!");
+                navigate("/dashboard");
             })
             .catch((error) => {
-                useNotification(messageApi, "error", error.message);
+                messageApi.error(error.message);
                 setIsLoading(false);
             });
     };
 
     return (
-        <>
+        <Space direction="vertical" align="center">
             {contextHolder}
+            <Title>Login</Title>
             <Form name="loginForm" onFinish={onFinish}>
                 <FormItem
                     name="email"
@@ -68,7 +78,7 @@ const LoginForm = () => {
                     ]}
                 >
                     <Input
-                        prefix={<PiUserBold className="site-form-item-icon" />}
+                        prefix={<PiAtBold />}
                         placeholder="Email"
                         onChange={(event) => setUserEmail(event.target.value)}
                     />
@@ -83,7 +93,7 @@ const LoginForm = () => {
                     ]}
                 >
                     <Input
-                        prefix={<PiLockBold className="site-form-item-icon" />}
+                        prefix={<PiLockBold />}
                         type="password"
                         placeholder="Password"
                         onChange={(event) => setPassword(event.target.value)}
@@ -116,7 +126,7 @@ const LoginForm = () => {
                     </Paragraph>
                 </FormItem>
             </Form>
-        </>
+        </Space>
     );
 };
 

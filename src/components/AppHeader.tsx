@@ -1,18 +1,30 @@
 import Avatar from "antd/es/avatar/avatar";
 import Button from "antd/es/button/button";
 import Space from "antd/es/space";
-import { useNavigate } from "react-router-dom";
-import { PiHashStraightLight, PiSunFill, PiMoonFill } from "react-icons/pi";
 import Title from "antd/es/typography/Title";
+import { useAtom } from "jotai";
 import { Dispatch, SetStateAction } from "react";
+import {
+    PiHashStraightLight,
+    PiMoonFill,
+    PiSignOutFill,
+    PiSunFill,
+} from "react-icons/pi";
+import { useNavigate } from "react-router-dom";
+import { isAuthenticatedAtom } from "../atoms/authAtoms";
+import { userAliasAtom } from "../atoms/userAtoms";
 
-interface IProps {
+interface Props {
     theme: boolean;
     setTheme: Dispatch<SetStateAction<boolean>>;
 }
 
-const AppHeader = ({ theme, setTheme }: IProps) => {
+const AppHeader = ({ theme, setTheme }: Props) => {
     const navigate = useNavigate();
+
+    const [isAuthenticated, setIsAuthenticated] = useAtom(isAuthenticatedAtom);
+    const [alias] = useAtom(userAliasAtom);
+
     return (
         <div
             style={{
@@ -55,20 +67,52 @@ const AppHeader = ({ theme, setTheme }: IProps) => {
                 >
                     {theme ? <PiSunFill /> : <PiMoonFill />}
                 </Button>
-                <Button
-                    type="default"
-                    shape="round"
-                    onClick={() => navigate("/login")}
-                >
-                    Login
-                </Button>
-                <Button
-                    type="default"
-                    shape="round"
-                    onClick={() => navigate("/register")}
-                >
-                    Register
-                </Button>
+                {isAuthenticated ? (
+                    <>
+                        <Button
+                            type="default"
+                            shape="round"
+                            onClick={() => navigate("/dashboard")}
+                        >
+                            {alias}
+                        </Button>
+
+                        <Button
+                            danger
+                            type="default"
+                            shape="round"
+                            style={{
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                            }}
+                            onClick={() => {
+                                localStorage.removeItem("authToken");
+                                setIsAuthenticated(false);
+                                navigate("/");
+                            }}
+                        >
+                            <PiSignOutFill />
+                        </Button>
+                    </>
+                ) : (
+                    <>
+                        <Button
+                            type="default"
+                            shape="round"
+                            onClick={() => navigate("/login")}
+                        >
+                            Login
+                        </Button>
+                        <Button
+                            type="default"
+                            shape="round"
+                            onClick={() => navigate("/register")}
+                        >
+                            Register
+                        </Button>
+                    </>
+                )}
             </Space>
         </div>
     );
