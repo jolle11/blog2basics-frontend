@@ -1,4 +1,4 @@
-import Layout, { Footer } from "antd/es/layout/layout";
+import { Footer } from "antd/es/layout/layout";
 import Title from "antd/es/typography/Title";
 
 const AppFooter = () => {
@@ -8,9 +8,10 @@ const AppFooter = () => {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
+                height: "72px",
             }}
         >
-            <Title level={5} style={{ margin: "0" }}>
+            <Title level={5} style={{ margin: "0", textAlign: "center" }}>
                 Blog2Basics © 2023 Created by jordi0lle
             </Title>
         </Footer>
