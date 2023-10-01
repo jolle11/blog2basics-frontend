@@ -31,7 +31,7 @@ const PostsList = ({ posts, blog }: Props) => {
                             cursor: "pointer",
                         }}
                         onClick={() => {
-                            navigate(`/blogs/${blog.id}/posts/${post.id}`);
+                            navigate(`/blogs/${blog.slug}/posts/${post.slug}`);
                         }}
                     >
                         <Title level={4}>{post.title}</Title>

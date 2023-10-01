@@ -3,12 +3,14 @@ import { atom } from 'jotai';
 export interface Blog {
 	id?: number;
 	name?: string;
+	slug?: string;
 	description?: string;
 }
 
 export interface Post {
 	id?: number;
 	title?: string;
+	slug?: string;
 	body?: string;
 }
 
@@ -20,12 +22,14 @@ export interface Comment {
 export const userBlogAtom = atom<Blog>({
 	id: 0,
 	name: '',
+	slug: '',
 	description: '',
 });
 
 export const userPostAtom = atom<Post>({
 	id: 0,
 	title: '',
+	slug: '',
 	body: '',
 });
 
