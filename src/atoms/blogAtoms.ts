@@ -1,20 +1,20 @@
 import { atom } from 'jotai';
 
-interface Blog {
-	id: number;
-	name: string;
-	description: string;
+export interface Blog {
+	id?: number;
+	name?: string;
+	description?: string;
 }
 
 export interface Post {
-	id: number;
-	title: string;
-	body: string;
+	id?: number;
+	title?: string;
+	body?: string;
 }
 
-interface Comment {
-	id: number;
-	body: string;
+export interface Comment {
+	id?: number;
+	body?: string;
 }
 
 export const userBlogAtom = atom<Blog>({
