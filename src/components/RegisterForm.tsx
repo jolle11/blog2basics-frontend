@@ -22,7 +22,7 @@ import {
     userSurnameAtom,
     usernameAtom,
 } from "../atoms/userAtoms";
-import Loader from "./Loader";
+import { Loader } from "./Loader";
 
 const RegisterForm = () => {
     const [userEmail, setUserEmail] = useAtom(userEmailAtom);
@@ -87,6 +87,7 @@ const RegisterForm = () => {
                     <Input
                         prefix={<PiAtBold />}
                         placeholder="Email"
+                        type="email"
                         onChange={(event) => setUserEmail(event.target.value)}
                     />
                 </FormItem>

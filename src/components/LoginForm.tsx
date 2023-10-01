@@ -17,7 +17,7 @@ import {
     userEmailAtom,
     userPasswordAtom,
 } from "../atoms/userAtoms";
-import Loader from "./Loader";
+import { Loader } from "./Loader";
 
 const LoginForm = () => {
     const [userEmail, setUserEmail] = useAtom(userEmailAtom);
@@ -80,6 +80,7 @@ const LoginForm = () => {
                     <Input
                         prefix={<PiAtBold />}
                         placeholder="Email"
+                        type="email"
                         onChange={(event) => setUserEmail(event.target.value)}
                     />
                 </FormItem>
