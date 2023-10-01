@@ -8,9 +8,8 @@ const LoginPage = () => {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                margin: "auto",
-                height: "100%",
             }}
+            className="content"
         >
             <LoginForm />
         </Content>
