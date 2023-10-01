@@ -3,7 +3,6 @@ import Button from "antd/es/button/button";
 import Space from "antd/es/space";
 import Title from "antd/es/typography/Title";
 import { useAtom } from "jotai";
-import { Dispatch, SetStateAction } from "react";
 import {
     PiHashStraightLight,
     PiMoonFill,
@@ -12,15 +11,13 @@ import {
 } from "react-icons/pi";
 import { useNavigate } from "react-router-dom";
 import { isAuthenticatedAtom } from "../atoms/authAtoms";
+import { isDarkModeAtom } from "../atoms/genericAtoms";
 import { userAliasAtom } from "../atoms/userAtoms";
 
-interface Props {
-    theme: boolean;
-    setTheme: Dispatch<SetStateAction<boolean>>;
-}
-
-const AppHeader = ({ theme, setTheme }: Props) => {
+const AppHeader = () => {
     const navigate = useNavigate();
+
+    const [isDarkMode, setIsDarkMode] = useAtom(isDarkModeAtom);
 
     const [isAuthenticated, setIsAuthenticated] = useAtom(isAuthenticatedAtom);
     const [alias] = useAtom(userAliasAtom);
@@ -32,6 +29,7 @@ const AppHeader = ({ theme, setTheme }: Props) => {
                 alignItems: "center",
                 justifyContent: "space-between",
                 padding: "15px",
+                height: "68px",
             }}
         >
             <Space
@@ -63,9 +61,9 @@ const AppHeader = ({ theme, setTheme }: Props) => {
                         alignItems: "center",
                         justifyContent: "center",
                     }}
-                    onClick={() => setTheme(!theme)}
+                    onClick={() => setIsDarkMode(!isDarkMode)}
                 >
-                    {theme ? <PiSunFill /> : <PiMoonFill />}
+                    {isDarkMode ? <PiSunFill /> : <PiMoonFill />}
                 </Button>
                 {isAuthenticated ? (
                     <>
