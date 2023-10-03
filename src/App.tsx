@@ -10,6 +10,7 @@ import { isAppLoadingAtom, isDarkModeAtom } from "./atoms/genericAtoms";
 import { userAliasAtom } from "./atoms/userAtoms";
 import AppFooter from "./components/AppFooter";
 import AppHeader from "./components/AppHeader";
+import BackButton from "./components/BackButton";
 import { Loader } from "./components/Loader";
 import BlogPage from "./pages/BlogPage";
 import BlogPostPage from "./pages/BlogPostPage";
@@ -87,6 +88,7 @@ function App() {
                     <Layout className="app">
                         <AppHeader />
                         <Divider style={{ margin: 0 }} />
+                        <BackButton />
                         <Content className="content">
                             <Routes>
                                 <Route path="/" element={<LandingPage />} />
