@@ -1,8 +1,9 @@
 import Space from "antd/es/space";
 import Paragraph from "antd/es/typography/Paragraph";
 import Title from "antd/es/typography/Title";
+import { useAtom } from "jotai";
 import { useNavigate } from "react-router-dom";
-import { Blog, Post } from "../atoms/blogAtoms";
+import { Blog, Post, userPostAtom } from "../atoms/blogAtoms";
 
 interface Props {
     posts: Post[];
@@ -11,6 +12,7 @@ interface Props {
 
 const PostsList = ({ posts, blog }: Props) => {
     const navigate = useNavigate();
+    const [, setUserPost] = useAtom(userPostAtom);
 
     return (
         <Space
@@ -31,6 +33,7 @@ const PostsList = ({ posts, blog }: Props) => {
                             cursor: "pointer",
                         }}
                         onClick={() => {
+                            setUserPost(post);
                             navigate(`/blogs/${blog.slug}/posts/${post.slug}`);
                         }}
                     >
