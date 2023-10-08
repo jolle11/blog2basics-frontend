@@ -31,6 +31,8 @@ const CommentsComponent = () => {
                     }
                 )
                 .then((response) => {
+                    console.log(response);
+
                     setComments(response.data);
                 })
                 .catch((error) => {
@@ -50,7 +52,7 @@ const CommentsComponent = () => {
                         justifyContent: "space-between",
                     }}
                 >
-                    <Title level={5}>UserName</Title>
+                    <Title level={5}>{comment.alias}</Title>
                     <Paragraph>{comment.body}</Paragraph>
                 </Space>
             ))}
