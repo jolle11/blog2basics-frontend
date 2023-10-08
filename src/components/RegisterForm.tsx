@@ -15,21 +15,11 @@ import {
 import { useNavigate } from "react-router-dom";
 import { authTokenAtom, isAuthenticatedAtom } from "../atoms/authAtoms";
 import { isLoadingAtom } from "../atoms/genericAtoms";
-import {
-    userAliasAtom,
-    userEmailAtom,
-    userPasswordAtom,
-    userSurnameAtom,
-    usernameAtom,
-} from "../atoms/userAtoms";
+import { userAtom } from "../atoms/userAtoms";
 import { Loader } from "./Loader";
 
 const RegisterForm = () => {
-    const [userEmail, setUserEmail] = useAtom(userEmailAtom);
-    const [password, setPassword] = useAtom(userPasswordAtom);
-    const [username, setUsername] = useAtom(usernameAtom);
-    const [surname, setSurname] = useAtom(userSurnameAtom);
-    const [alias, setAlias] = useAtom(userAliasAtom);
+    const [user, setUser] = useAtom(userAtom);
 
     const [, setIsAuthenticated] = useAtom(isAuthenticatedAtom);
     const [, setAuthToken] = useAtom(authTokenAtom);
@@ -46,11 +36,11 @@ const RegisterForm = () => {
             .post(
                 "http://localhost:3333/api/register",
                 {
-                    email: userEmail,
-                    password: password,
-                    name: username,
-                    surname: surname,
-                    alias: alias,
+                    email: user.email,
+                    password: user.password,
+                    name: user.name,
+                    surname: user.surname,
+                    alias: user.alias,
                 },
                 {
                     headers: {
@@ -88,7 +78,9 @@ const RegisterForm = () => {
                         prefix={<PiAtBold />}
                         placeholder="Email"
                         type="email"
-                        onChange={(event) => setUserEmail(event.target.value)}
+                        onChange={(event) =>
+                            setUser({ ...user, email: event.target.value })
+                        }
                     />
                 </FormItem>
                 <FormItem
@@ -104,7 +96,9 @@ const RegisterForm = () => {
                         prefix={<PiLockBold />}
                         type="password"
                         placeholder="Password"
-                        onChange={(event) => setPassword(event.target.value)}
+                        onChange={(event) =>
+                            setUser({ ...user, password: event.target.value })
+                        }
                     />
                 </FormItem>
                 <FormItem
@@ -116,7 +110,9 @@ const RegisterForm = () => {
                     <Input
                         prefix={<PiUserBold />}
                         placeholder="Name"
-                        onChange={(event) => setUsername(event.target.value)}
+                        onChange={(event) =>
+                            setUser({ ...user, name: event.target.value })
+                        }
                     />
                 </FormItem>
                 <FormItem
@@ -131,7 +127,9 @@ const RegisterForm = () => {
                     <Input
                         prefix={<PiUserPlusBold />}
                         placeholder="Surname"
-                        onChange={(event) => setSurname(event.target.value)}
+                        onChange={(event) =>
+                            setUser({ ...user, surname: event.target.value })
+                        }
                     />
                 </FormItem>
                 <FormItem
@@ -143,7 +141,9 @@ const RegisterForm = () => {
                     <Input
                         prefix={<PiStarFourBold />}
                         placeholder="Alias"
-                        onChange={(event) => setAlias(event.target.value)}
+                        onChange={(event) =>
+                            setUser({ ...user, alias: event.target.value })
+                        }
                     />
                 </FormItem>
                 <FormItem>

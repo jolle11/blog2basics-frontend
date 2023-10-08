@@ -12,21 +12,15 @@ import { Link, useNavigate } from "react-router-dom";
 import { authTokenAtom, isAuthenticatedAtom } from "../atoms/authAtoms";
 import { userBlogAtom } from "../atoms/blogAtoms";
 import { isLoadingAtom } from "../atoms/genericAtoms";
-import {
-    userAliasAtom,
-    userEmailAtom,
-    userPasswordAtom,
-} from "../atoms/userAtoms";
+import { userAtom } from "../atoms/userAtoms";
 import { Loader } from "./Loader";
 
 const LoginForm = () => {
-    const [userEmail, setUserEmail] = useAtom(userEmailAtom);
-    const [password, setPassword] = useAtom(userPasswordAtom);
-    const [, setAlias] = useAtom(userAliasAtom);
+    const [user, setUser] = useAtom(userAtom);
     const [, setBlog] = useAtom(userBlogAtom);
 
-    const [isAuthenticated, setIsAuthenticated] = useAtom(isAuthenticatedAtom);
-    const [authToken, setAuthToken] = useAtom(authTokenAtom);
+    const [, setIsAuthenticated] = useAtom(isAuthenticatedAtom);
+    const [, setAuthToken] = useAtom(authTokenAtom);
 
     const [isLoading, setIsLoading] = useAtom(isLoadingAtom);
 
@@ -40,8 +34,8 @@ const LoginForm = () => {
             .post(
                 "http://localhost:3333/api/login",
                 {
-                    email: userEmail,
-                    password: password,
+                    email: user.email,
+                    password: user.password,
                 },
                 {
                     headers: {
@@ -54,7 +48,7 @@ const LoginForm = () => {
                 localStorage.setItem("authToken", response.data.token);
                 setAuthToken(response.data.token);
                 setIsAuthenticated(true);
-                setAlias(response.data.alias);
+                setUser({ ...user, alias: response.data.alias });
                 setBlog(response.data.blog);
                 setIsLoading(false);
                 messageApi.success("Successfully logged in!");
@@ -81,7 +75,9 @@ const LoginForm = () => {
                         prefix={<PiAtBold />}
                         placeholder="Email"
                         type="email"
-                        onChange={(event) => setUserEmail(event.target.value)}
+                        onChange={(event) =>
+                            setUser({ ...user, email: event.target.value })
+                        }
                     />
                 </FormItem>
                 <FormItem
@@ -97,7 +93,12 @@ const LoginForm = () => {
                         prefix={<PiLockBold />}
                         type="password"
                         placeholder="Password"
-                        onChange={(event) => setPassword(event.target.value)}
+                        onChange={(event) =>
+                            setUser({
+                                ...user,
+                                password: event.target.value,
+                            })
+                        }
                     />
                 </FormItem>
                 <FormItem>

@@ -12,7 +12,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { isAuthenticatedAtom } from "../atoms/authAtoms";
 import { isDarkModeAtom } from "../atoms/genericAtoms";
-import { userAliasAtom } from "../atoms/userAtoms";
+import { userAtom } from "../atoms/userAtoms";
 
 const AppHeader = () => {
     const navigate = useNavigate();
@@ -20,7 +20,7 @@ const AppHeader = () => {
     const [isDarkMode, setIsDarkMode] = useAtom(isDarkModeAtom);
 
     const [isAuthenticated, setIsAuthenticated] = useAtom(isAuthenticatedAtom);
-    const [alias] = useAtom(userAliasAtom);
+    const [user] = useAtom(userAtom);
 
     return (
         <div
@@ -72,7 +72,7 @@ const AppHeader = () => {
                             shape="round"
                             onClick={() => navigate("/dashboard")}
                         >
-                            {alias}
+                            {user.alias}
                         </Button>
 
                         <Button
