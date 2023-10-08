@@ -11,8 +11,8 @@ const BackButton = () => {
         <Button
             style={{
                 position: "absolute",
-                top: "74px",
-                left: "6px",
+                top: "18px",
+                left: "calc(50% - 16px)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",

@@ -1,4 +1,5 @@
 import { Space } from "antd";
+import BackButton from "../components/BackButton";
 import CommentsComponent from "../components/CommentsComponent";
 import PostComponent from "../components/PostComponent";
 
@@ -12,6 +13,7 @@ const BlogPostPage = () => {
                 justifyContent: "space-between",
             }}
         >
+            <BackButton />
             <PostComponent />
             <CommentsComponent />
         </Space>

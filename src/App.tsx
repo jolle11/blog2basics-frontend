@@ -10,7 +10,6 @@ import { isAppLoadingAtom, isDarkModeAtom } from "./atoms/genericAtoms";
 import { userAliasAtom } from "./atoms/userAtoms";
 import AppFooter from "./components/AppFooter";
 import AppHeader from "./components/AppHeader";
-import BackButton from "./components/BackButton";
 import { Loader } from "./components/Loader";
 import BlogPage from "./pages/BlogPage";
 import BlogPostPage from "./pages/BlogPostPage";
@@ -21,7 +20,7 @@ import RegisterPage from "./pages/RegisterPage";
 
 function App() {
     const { defaultAlgorithm, darkAlgorithm } = theme;
-    const [isDarkMode, setIsDarkMode] = useAtom(isDarkModeAtom);
+    const [isDarkMode] = useAtom(isDarkModeAtom);
 
     const [, setAlias] = useAtom(userAliasAtom);
     const [, setBlog] = useAtom(userBlogAtom);
@@ -29,7 +28,7 @@ function App() {
     const [isLoading, setIsLoading] = useAtom(isAppLoadingAtom);
 
     const [authToken, setAuthToken] = useAtom(authTokenAtom);
-    const [isAuthenticated, setIsAuthenticated] = useAtom(isAuthenticatedAtom);
+    const [setIsAuthenticated] = useAtom(isAuthenticatedAtom);
 
     useEffect(() => {
         if (localStorage.getItem("authToken")) {
@@ -88,7 +87,6 @@ function App() {
                     <Layout className="app">
                         <AppHeader />
                         <Divider style={{ margin: 0 }} />
-                        <BackButton />
                         <Content className="content">
                             <Routes>
                                 <Route path="/" element={<LandingPage />} />
