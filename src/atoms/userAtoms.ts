@@ -1,23 +1,21 @@
 import { atom } from 'jotai';
 
 export interface User {
+	id: string;
 	email: string;
 	password: string;
 	name: string;
 	surname: string;
 	alias: string;
+	remember_me_token: string;
 }
 
 export const userAtom = atom<User>({
+	id: '',
 	email: '',
 	password: '',
 	name: '',
 	surname: '',
 	alias: '',
+	remember_me_token: '',
 });
-
-export const userEmailAtom = atom<string | null>('');
-export const userPasswordAtom = atom<string | null>('');
-export const usernameAtom = atom<string | null>('');
-export const userSurnameAtom = atom<string | null>('');
-export const userAliasAtom = atom<string | null>('');

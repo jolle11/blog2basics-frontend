@@ -7,7 +7,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { authTokenAtom, isAuthenticatedAtom } from "./atoms/authAtoms";
 import { userBlogAtom } from "./atoms/blogAtoms";
 import { isAppLoadingAtom, isDarkModeAtom } from "./atoms/genericAtoms";
-import { userAliasAtom } from "./atoms/userAtoms";
+import { userAtom } from "./atoms/userAtoms";
 import AppFooter from "./components/AppFooter";
 import AppHeader from "./components/AppHeader";
 import { Loader } from "./components/Loader";
@@ -22,13 +22,13 @@ function App() {
     const { defaultAlgorithm, darkAlgorithm } = theme;
     const [isDarkMode] = useAtom(isDarkModeAtom);
 
-    const [, setAlias] = useAtom(userAliasAtom);
+    const [, setUser] = useAtom(userAtom);
     const [, setBlog] = useAtom(userBlogAtom);
 
     const [isLoading, setIsLoading] = useAtom(isAppLoadingAtom);
 
     const [authToken, setAuthToken] = useAtom(authTokenAtom);
-    const [setIsAuthenticated] = useAtom(isAuthenticatedAtom);
+    const [, setIsAuthenticated] = useAtom(isAuthenticatedAtom);
 
     useEffect(() => {
         if (localStorage.getItem("authToken")) {
@@ -50,7 +50,7 @@ function App() {
                 .then((response) => {
                     setAuthToken(response.data.user.remember_me_token);
                     setIsAuthenticated(true);
-                    setAlias(response.data.user.alias);
+                    setUser(response.data.user);
                     setBlog(response.data.blog);
                     setIsLoading(false);
                 })
