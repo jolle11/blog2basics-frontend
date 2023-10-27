@@ -1,9 +1,10 @@
 import Space from "antd/es/space";
 import Paragraph from "antd/es/typography/Paragraph";
 import Title from "antd/es/typography/Title";
+import axios from "axios";
 import { useAtom } from "jotai";
 import { useNavigate } from "react-router-dom";
-import { Blog, Post, userPostAtom } from "../atoms/blogAtoms";
+import { Blog, Post, userBlogAtom, userPostAtom } from "../atoms/blogAtoms";
 
 interface Props {
     posts: Post[];
@@ -13,6 +14,7 @@ interface Props {
 const PostsList = ({ posts, blog }: Props) => {
     const navigate = useNavigate();
     const [, setUserPost] = useAtom(userPostAtom);
+    const [, setBlog] = useAtom(userBlogAtom);
 
     return (
         <Space
@@ -34,7 +36,32 @@ const PostsList = ({ posts, blog }: Props) => {
                         }}
                         onClick={() => {
                             setUserPost(post);
-                            navigate(`/blogs/${blog.slug}/posts/${post.slug}`);
+                            if (blog) {
+                                navigate(
+                                    `/blogs/${blog.slug}/posts/${post.slug}`
+                                );
+                            } else {
+                                axios
+                                    .get(
+                                        `http://localhost:3333/api/blogs/${post.blog_id}`,
+                                        {
+                                            headers: {
+                                                "Access-Control-Allow-Origin":
+                                                    "*",
+                                                "Content-Type":
+                                                    "application/json",
+                                            },
+                                        }
+                                    )
+                                    .then((response) => {
+                                        console.log(response.data);
+
+                                        setBlog(response.data);
+                                    })
+                                    .catch((error) => {
+                                        console.log(error);
+                                    });
+                            }
                         }}
                     >
                         <Title level={4}>{post.title}</Title>

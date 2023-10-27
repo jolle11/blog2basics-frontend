@@ -2,7 +2,9 @@ import Avatar from "antd/es/avatar/avatar";
 import Button from "antd/es/button/button";
 import Space from "antd/es/space";
 import Title from "antd/es/typography/Title";
+import axios from "axios";
 import { useAtom } from "jotai";
+import { useEffect } from "react";
 import {
     PiHashStraightLight,
     PiMoonFill,
@@ -10,7 +12,7 @@ import {
     PiSunFill,
 } from "react-icons/pi";
 import { useNavigate } from "react-router-dom";
-import { isAuthenticatedAtom } from "../atoms/authAtoms";
+import { authTokenAtom, isAuthenticatedAtom } from "../atoms/authAtoms";
 import { isDarkModeAtom } from "../atoms/genericAtoms";
 import { userAtom } from "../atoms/userAtoms";
 
@@ -20,7 +22,31 @@ const AppHeader = () => {
     const [isDarkMode, setIsDarkMode] = useAtom(isDarkModeAtom);
 
     const [isAuthenticated, setIsAuthenticated] = useAtom(isAuthenticatedAtom);
-    const [user] = useAtom(userAtom);
+    const [authToken, setAuthToken] = useAtom(authTokenAtom);
+    const [user, setUser] = useAtom(userAtom);
+
+    const getUserBlog = () => {
+        axios
+            .post(
+                "http://localhost:3333/api/user",
+                {
+                    token: authToken,
+                },
+                {
+                    headers: {
+                        "Access-Control-Allow-Origin": "*",
+                        "Content-Type": "application/json",
+                    },
+                    data: { token: authToken },
+                }
+            )
+            .then((response) => {
+                setUser(response.data.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
 
     return (
         <div
@@ -70,7 +96,11 @@ const AppHeader = () => {
                         <Button
                             type="default"
                             shape="round"
-                            onClick={() => navigate("/dashboard")}
+                            onClick={() => {
+                                console.log(user);
+                                setBlog();
+                                navigate("/dashboard");
+                            }}
                         >
                             {user.alias}
                         </Button>
